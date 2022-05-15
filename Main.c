@@ -6,6 +6,11 @@
 
 #define N_FLIPS_PER_STEP 1
 #define N_MARKOV_STEPS 1000
+#define HOT_INIT 0
+
+// steps: number of steps since last valid configuration
+// acc: number of accepted configurations
+#define TERMALISATION_CONDITION (steps<100)
 
 /*
  * Generates the initial configuration.
@@ -14,13 +19,20 @@
 void init(int *lattice, const int L)
 {
     int r;
+    r = rand() % 2;
     for(int row=0; row<L; row++)
     {
         for(int col=0; col<L; col++)
         {
-            r = rand() % 2; // Returns 0 or 1
-            //printf("%d", r ? 1 : -1);
-            lattice[row*L + col] = (r ? 1 : -1);
+            #if HOT_MODE == 1
+                // HOT init, all site are random
+                r = rand() % 2; // Returns 0 or 1
+                printf("%d", r ? 1 : -1);
+                lattice[row*L + col] = (r ? 1 : -1);
+            #else
+                // COLD init, same state for all the spins
+                lattice[row*L + col] = (r ? 1 : -1);
+            # endif
         }
         //printf("\n");
     }
@@ -197,7 +209,6 @@ int main(int argc, char *argv[])
 
     srand(time(NULL));
 
-    // Generate random initial configuration
     printf("init:\n");
     init(lattice, L);
 
@@ -211,7 +222,7 @@ int main(int argc, char *argv[])
 
         acc = 0;
         steps = 0;
-        while( steps < 1000) {
+        while( TERMALISATION_CONDITION ) {
             steps++;
             acc+=montecarlo_step(lattice, L, E, T);
             //printf("%f\t", (double) acc/steps );
