@@ -1,0 +1,12 @@
+name: isingML
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+    - tensorflow
+    - notebook
+    - matplotlib
+    - seaborn
