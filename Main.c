@@ -1,16 +1,15 @@
 #include<stdio.h>
 #include<math.h>
-#include <time.h>
-#include <stdlib.h>
+#include<time.h>
+#include<stdlib.h>
 #include<string.h>
 
 #define N_FLIPS_PER_STEP 1
-#define N_MARKOV_STEPS 1000
 #define HOT_INIT 0
 
 // steps: number of steps since last valid configuration
 // acc: number of accepted configurations
-#define TERMALISATION_CONDITION (steps<100)
+#define TERMALISATION_CONDITION (steps<100 || (steps < 10000 && abs(acc-0.5) > 0.1 ) )
 
 /*
  * Generates the initial configuration.
@@ -186,7 +185,7 @@ void save(FILE *fptr, int L, double T, int E, int *lattice)
  */
 int main(int argc, char *argv[])
 {
-    int L, E;
+    int L, E, N_MARKOV_STEPS;
     double T;
     FILE *fptr;
 
@@ -194,10 +193,12 @@ int main(int argc, char *argv[])
     for (int i = 0; i < argc; i++) {
         if( strcmp(argv[i], "-L")==0 &&  i+1<argc ) {
             L = atoi(argv[i+1]); // Side of the lattice
+        } else if( strcmp(argv[i], "-ms")==0 &&  i+1<argc ) {
+            N_MARKOV_STEPS = atof(argv[i+1]); // Steps
         } else if( strcmp(argv[i], "-T")==0 &&  i+1<argc ) {
             T = atof(argv[i+1]); // Temperature
         } else if( strcmp(argv[i], "-o")==0 &&  i+1<argc ) {
-            fptr = fopen(argv[i+1], "w");
+            fptr = fopen(argv[i+1], "a+");
             if(fptr == NULL) {
                 printf("Can not open file %s\n", argv[i+1]);
                 exit(1);
@@ -232,7 +233,7 @@ int main(int argc, char *argv[])
         E = computeEnergy(lattice, L);
         save(fptr, L, T, E, lattice);
 
-        printf("montecarlo_step: n=%d/%d=%f\t E=%d\t T=%f\n", acc, steps, (double) acc/steps, E, T);
+        printf("montecarlo_step: acc=%d/%d=%f\t E=%d\t T=%f\n", acc, steps, (double) acc/steps, E, T);
 
         /*
             printf("printLattice:\n");
