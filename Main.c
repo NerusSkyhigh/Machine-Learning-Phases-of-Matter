@@ -17,20 +17,20 @@
  */
 void init(int *lattice, const int L)
 {
-    int r;
-    r = rand() % 2;
+    double r;
+    r = 1.0*rand() / RAND_MAX;
+    //printf("%f", r);
     for(int row=0; row<L; row++)
     {
         for(int col=0; col<L; col++)
         {
             #if HOT_MODE == 1
                 // HOT init, all site are random
-                r = rand() % 2; // Returns 0 or 1
-                printf("%d", r ? 1 : -1);
-                lattice[row*L + col] = (r ? 1 : -1);
+                r = 1.0*rand() / RAND_MAX; // Returns 0 or 1
+                lattice[row*L + col] = (r>0.5 ? 1 : -1);
             #else
-                // COLD init, same state for all the spins
-                lattice[row*L + col] = (r ? 1 : -1);
+                // COLD init, same state for all the spins               
+                lattice[row*L + col] = (r>0.5 ? 1 : -1);
             # endif
         }
         //printf("\n");
@@ -71,8 +71,8 @@ int computeEnergy(const int *lattice, int L)
             idx_r = (col == L-1) ? row*L : row*L + col+1;
             idx_b = (row == L-1) ? col   : (row+1)*L + col;
 
-            E += lattice[idx]*lattice[idx_r];
-            E += lattice[idx]*lattice[idx_b];
+            E += -1*lattice[idx]*lattice[idx_r];
+            E += -1*lattice[idx]*lattice[idx_b];
         }
     }
 
@@ -103,7 +103,7 @@ int propose_configuration(int *lattice, int n_flips, int L, int E)
         idx_r = (col == L-1) ?   row*L      :     row*L + col+1;
         idx_b = (row == L-1) ?         col  : (row+1)*L + col;
 
-        E +=  2*lattice[row*L+col] * (  lattice[idx_l] +
+        E +=  -2*lattice[row*L+col] * (  lattice[idx_l] +
                                         lattice[idx_a] +
                                         lattice[idx_r] +
                                         lattice[idx_b]);
@@ -180,6 +180,18 @@ void save(FILE *fptr, int L, double T, int E, int *lattice)
 
 
 /*
+ * Alternative to srand(time(NULL)) which keeps returning the same value
+ * due to very close callings
+ * https://stackoverflow.com/questions/7617587/is-there-an-alternative-to-using-time-to-seed-a-random-number-generation
+ */
+unsigned long long rdtsc(){
+    unsigned int lo,hi;
+    __asm__ __volatile__ ("rdtsc" : "=a" (lo), "=d" (hi));
+    return ((unsigned long long)hi << 32) | lo;
+}
+
+
+/*
  * The aim of this program is to generate Ising Configurtions
  * on a lattice
  */
@@ -208,7 +220,7 @@ int main(int argc, char *argv[])
     
     int *lattice = (int*) calloc(L*L, sizeof(int));
 
-    srand(time(NULL));
+    srand(rdtsc());
 
     printf("init:\n");
     init(lattice, L);
