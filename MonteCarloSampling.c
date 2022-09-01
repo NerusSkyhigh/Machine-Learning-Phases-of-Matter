@@ -29,7 +29,7 @@ void init(int *lattice, const int L)
                 r = 1.0*rand() / RAND_MAX; // Returns 0 or 1
                 lattice[row*L + col] = (r>0.5 ? 1 : -1);
             #else
-                // COLD init, same state for all the spins               
+                // COLD init, same state for all the spins
                 lattice[row*L + col] = (r>0.5 ? 1 : -1);
             # endif
         }
@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
 
     // Parse command line arguments
     for (int i = 0; i < argc; i++) {
-        if( strcmp(argv[i], "-L")==0 &&  i+1<argc ) {
+        if( strcmp(argv[i], "-L")==0 |  &&  i+1<argc ) {
             L = atoi(argv[i+1]); // Side of the lattice
         } else if( strcmp(argv[i], "-ms")==0 &&  i+1<argc ) {
             N_MARKOV_STEPS = atof(argv[i+1]); // Steps
@@ -217,12 +217,12 @@ int main(int argc, char *argv[])
             }
         }
     }
-    
+
     int *lattice = (int*) calloc(L*L, sizeof(int));
 
     srand(rdtsc());
 
-    printf("init:\n");
+    //printf("init:\n");
     init(lattice, L);
 
 
@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
         E = computeEnergy(lattice, L);
         save(fptr, L, T, E, lattice);
 
-        printf("montecarlo_step: acc=%d/%d=%f\t E=%d\t T=%f\n", acc, steps, (double) acc/steps, E, T);
+        printf("montecarlo_step: acceptation_rate=%d/%d=%f\t Energy=%d\t Temperature=%f\n", acc, steps, (double) acc/steps, E, T);
 
         /*
             printf("printLattice:\n");
