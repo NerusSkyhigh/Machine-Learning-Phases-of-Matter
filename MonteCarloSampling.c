@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
 
     // Parse command line arguments
     for (int i = 0; i < argc; i++) {
-        if( strcmp(argv[i], "-L")==0 |  &&  i+1<argc ) {
+        if( strcmp(argv[i], "-L")==0  &&  i+1<argc ) {
             L = atoi(argv[i+1]); // Side of the lattice
         } else if( strcmp(argv[i], "-ms")==0 &&  i+1<argc ) {
             N_MARKOV_STEPS = atof(argv[i+1]); // Steps
