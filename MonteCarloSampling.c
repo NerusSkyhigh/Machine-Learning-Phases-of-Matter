@@ -5,7 +5,7 @@
 #include<string.h>
 
 #define N_FLIPS_PER_STEP 1
-#define HOT_INIT 1
+#define HOT_INIT 0
 
 // steps: number of steps since last valid configuration
 // acc: number of accepted configurations
