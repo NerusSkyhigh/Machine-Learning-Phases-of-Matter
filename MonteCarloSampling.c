@@ -7,10 +7,6 @@
 #define N_FLIPS_PER_STEP 1
 #define HOT_INIT 0
 
-// steps: number of steps since last valid configuration
-// acc: number of accepted configurations
-#define ACCEPTANCE_CONDITION (steps<100 || (steps < 10000 && abs(acc-0.5) > 0.1 ) )
-
 /*
  * Generates the initial configuration.
  *  Should it be random?
@@ -24,7 +20,7 @@ void init(int *lattice, const int L)
     {
         for(int col=0; col<L; col++)
         {
-            #if HOT_MODE == 1
+            #if HOT_INIT == 1
                 // HOT init, all site are random
                 r = 1.0*rand() / RAND_MAX; // Returns 0 or 1
                 lattice[row*L + col] = (r>0.5 ? 1 : -1);
@@ -197,11 +193,12 @@ unsigned long long rdtsc(){
  */
 int main(int argc, char *argv[])
 {
-    int L, E, NUMBER_OF_CONFIGURATIONS, THERMALISATION_STEPS;
+    int L, E, NUMBER_OF_CONFIGURATIONS, THERMALISATION_STEPS, INITIAL_THERMALISATION_STEPS;
     double T;
     FILE *fptr;
 
-    THERMALISATION_STEPS = -1;
+    THERMALISATION_STEPS = 100;
+    INITIAL_THERMALISATION_STEPS = 100;
 
     // Parse command line arguments
     for (int i = 0; i < argc; i++) {
@@ -213,6 +210,8 @@ int main(int argc, char *argv[])
             THERMALISATION_STEPS = atof(argv[i+1]); // Steps
         } else if( strcmp(argv[i], "--temperature")==0 &&  i+1<argc ) {
             T = atof(argv[i+1]); // Temperature
+        } else if( strcmp(argv[i], "--initial-thermalisation-steps")==0 &&  i+1<argc ) {
+            INITIAL_THERMALISATION_STEPS = atof(argv[i+1]); // Steps
         } else if( strcmp(argv[i], "--output-file")==0 &&  i+1<argc ) {
             fptr = fopen(argv[i+1], "a+");
             if(fptr == NULL) {
@@ -226,13 +225,8 @@ int main(int argc, char *argv[])
     printf("LATTICE SIDE: %d\n", L);
     printf("TEMPERATURE: %f\n", T);
     printf("NUMBER OF CONFIGURATIONS: %d\n", NUMBER_OF_CONFIGURATIONS);
-    if(THERMALISATION_STEPS >= 0) {
-      printf("THERMALISATION_STEPS: %d\n", THERMALISATION_STEPS);
-    } else {
-      printf("DEFAULT THERMALISATION CRITERIA:\n");
-      printf("\tIterate until the acceptance rate is between 0.4 and 0.6.\n");
-      printf("\tAt least 100 steps but no more than 10 000.\n");
-    }
+    printf("THERMALISATION_STEPS: %d\n", THERMALISATION_STEPS);
+    printf("INITIAL_THERMALISATION_STEPS: %d\n", THERMALISATION_STEPS);
     printf("#######################################################\n\n");
 
     int *lattice = (int*) calloc(L*L, sizeof(int));
@@ -241,18 +235,19 @@ int main(int argc, char *argv[])
 
     init(lattice, L);
 
-
     int acc, steps;
+
+    E = computeEnergy(lattice, L);
+    for(steps=0; steps<INITIAL_THERMALISATION_STEPS; steps++) {
+        acc+=montecarlo_step(lattice, L, E, T);
+    }
+
     for(int i = 0; i<NUMBER_OF_CONFIGURATIONS; i++) {
-
         E = computeEnergy(lattice, L);
-
         acc = 0;
         steps = 0;
 
-        // If THERMALISATION_STEPS was passed as an argument iterate up to the
-        // desidered value, otherwise use the ACCEPTANCE_CONDITION
-        while( (ACCEPTANCE_CONDITION && THERMALISATION_STEPS<0) || steps<THERMALISATION_STEPS) {
+        while(steps<THERMALISATION_STEPS) {
             steps++;
             acc+=montecarlo_step(lattice, L, E, T);
         }
