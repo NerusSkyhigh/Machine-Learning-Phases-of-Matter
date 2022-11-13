@@ -1,3 +1,6 @@
+import pandas as pd
+import numpy as np
+
 def dataframe_from_lattice_csv(fileName, lattice_side):
   df = pd.read_csv(fileName, names=['L', 'T', 'E']+['LP'+str(i) for i in range(lattice_side*lattice_side)] )
 
