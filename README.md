@@ -42,11 +42,51 @@ The network's performances have a high dependence on the stochastic component of
 ![](img/02_FCNN_Toy_model_magnetization.png)
 ![](img/02_FCNN_Toy_model_temperature.png)
 
-
+</br>
 ### 03 The Network in detail
 
 
 
+### 04 t-SNE
+[Google colab link](https://colab.research.google.com/drive/1hUy1Fy7iUTkWHX-S79e-WppUdJBHMw9E?usp=sharing)
+
+The fourth notebook will try to implement the content of _Appendix B: Visualizing the action of a neural network on the Ising ferromagnet_ by using sklearn's implementation of t-SNE on the data sampled using Monte Carlo.
+
+**Results for various values of perplexity**  
+As t-SNE uses a non-convex cost function the plot will always look different. Some plots obtained are reported _for clarity_. As they were obtained by repetitive runs until a "good-looking" plot was produced, they have little scientific meaning.
+
+- Perplexity 100; Exageration 195
+<a href="https://ibb.co/9tgwpmV"><img src="https://i.ibb.co/ySPhNmY/final-perp100-exag195.png" alt="final-perp100-exag195" border="0"></a>
+
+- Perplexity 100; Exageration 50; points around $T_C$ used
+<a href="https://ibb.co/0BxK71p"><img src="https://i.ibb.co/1skMgBY/04-perplexity100.png" alt="04-perplexity100" border="0"></a>
+
+- Perplexity 50; Exageration 50; points around $T_C$ used
+<a href="https://ibb.co/KwTwyVm"><img src="https://i.ibb.co/X8c8JFV/04-perplexity50.png" alt="04-perplexity50" border="0"></a>
+
+- Perplexity 30; Exageration 50; points around $T_C$ used
+<a href="https://ibb.co/pKwh68F"><img src="https://i.ibb.co/092spSb/04-perplexity30.png" alt="04-perplexity30" border="0"></a>
+
+- Perplexity 10; Exageration 50; points around $T_C$ used
+<a href="https://ibb.co/k2LvVyY"><img src="https://i.ibb.co/DfBTPb3/04-perplexity10.png" alt="04-perplexity10" border="0"></a>
+
+- Perplexity 4; Exageration 50; points around $T_C$ used
+<a href="https://ibb.co/Hqd1HP0"><img src="https://i.ibb.co/L15bZgM/04-perplexity4.png" alt="04-perplexity4" border="0"></a>
+
+</br>
+
+</br>
+
 ## Bibliography
 - Article: [Machine learning phases of matter](https://www.nature.com/articles/nphys4035), [arxiv version](https://arxiv.org/abs/1605.01735) available in the repository.
 - Pytorch tutorials: [https://pytorch.org/tutorials/](https://pytorch.org/tutorials/)
+- [Understanding binary cross-entropy / log loss: a visual explanation](https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a)
+- [Differentiable Programming from Scratch](https://thenumb.at/Autodiff/): article on the inner working mechanism of the automatic differentiation algorithm of pytorch.
+- [Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980): arxiv entry for the Adam optimizer. Only the first two sections were consulted.
+- [Why Momentum Really Works](https://distill.pub/2017/momentum/)
+
+-
+
+
+- [t-distributed stochastic neighbor embedding](https://it.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding): wikipedia entry for t-SNE
+- [How to Use t-SNE Effectively](https://distill.pub/2016/misread-tsne/)
