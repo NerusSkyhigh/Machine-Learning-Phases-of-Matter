@@ -43,9 +43,18 @@ The network's performances have a high dependence on the stochastic component of
 ![](img/02_FCNN_Toy_model_temperature.png)
 
 </br>
+
 ### 03 The Network in detail
+[Google colab link](https://colab.research.google.com/drive/1alngDJg5uTnB-GwbBxkoK753OHZeg6Uw?usp=sharing)
 
+The third notebook will be more theory oriented. First the Toy model FCNN will be upgraded with an hidden layer of 100 neurons, then the training procedure will be discussed in detail.
+Following that, the results of [Juan Carrasquilla and Roger G. Melko](https://arxiv.org/abs/1605.01735) on non standard Ising hamiltonian will be presented.
 
+#### Training of the improved network
+
+<a href="https://ibb.co/TmwDDKW"><img src="https://i.ibb.co/xJ2KKmF/03-test.png" alt="03-test" border="0"></a>
+
+</br>
 
 ### 04 t-SNE
 [Google colab link](https://colab.research.google.com/drive/1hUy1Fy7iUTkWHX-S79e-WppUdJBHMw9E?usp=sharing)
