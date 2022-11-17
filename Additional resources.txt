@@ -1,9 +1,0 @@
-http://csc.ucdavis.edu/~chaos/courses/nlp/Projects2007/SaryuJindal/isingpaper.pdf
-
-https://itp.uni-frankfurt.de/~mwagner/teaching/C_WS19/projects/Ising_proj.pdf
-
-
-
-Autocorrelation:
-https://physics.stackexchange.com/questions/445197/periodic-autocorrelation-function-for-ising-model
-https://physics.stackexchange.com/questions/312431/2d-ising-model-understanding-autocorrelations-monte-carlo
