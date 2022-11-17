@@ -56,21 +56,27 @@ The fourth notebook will try to implement the content of _Appendix B: Visualizin
 As t-SNE uses a non-convex cost function the plot will always look different. Some plots obtained are reported _for clarity_. As they were obtained by repetitive runs until a "good-looking" plot was produced, they have little scientific meaning.
 
 - Perplexity 100; Exageration 195
+
 <a href="https://ibb.co/9tgwpmV"><img src="https://i.ibb.co/ySPhNmY/final-perp100-exag195.png" alt="final-perp100-exag195" border="0"></a>
 
 - Perplexity 100; Exageration 50; points around $T_C$ used
+
 <a href="https://ibb.co/0BxK71p"><img src="https://i.ibb.co/1skMgBY/04-perplexity100.png" alt="04-perplexity100" border="0"></a>
 
 - Perplexity 50; Exageration 50; points around $T_C$ used
+
 <a href="https://ibb.co/KwTwyVm"><img src="https://i.ibb.co/X8c8JFV/04-perplexity50.png" alt="04-perplexity50" border="0"></a>
 
 - Perplexity 30; Exageration 50; points around $T_C$ used
+
 <a href="https://ibb.co/pKwh68F"><img src="https://i.ibb.co/092spSb/04-perplexity30.png" alt="04-perplexity30" border="0"></a>
 
 - Perplexity 10; Exageration 50; points around $T_C$ used
+
 <a href="https://ibb.co/k2LvVyY"><img src="https://i.ibb.co/DfBTPb3/04-perplexity10.png" alt="04-perplexity10" border="0"></a>
 
 - Perplexity 4; Exageration 50; points around $T_C$ used
+
 <a href="https://ibb.co/Hqd1HP0"><img src="https://i.ibb.co/L15bZgM/04-perplexity4.png" alt="04-perplexity4" border="0"></a>
 
 </br>
