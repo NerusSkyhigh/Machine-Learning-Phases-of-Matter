@@ -10,7 +10,7 @@ Finally, as an appendix, the original data is analyzed with the _t-stochastic ne
 > :grey_exclamation: Some images may not display properly if GitHub's dark mode is active. If that's the case please change mode or open the plots one by one.
 
 ## Notebooks
-The following section presents a summary of the results obtained. A more detailed discussion is available inside the notebooks themselves. 
+The following section presents a summary of the results obtained. A detailed discussion is available inside the notebooks themselves. 
 
 ### 01 Monte Carlo simulation
 [Google colab link](https://colab.research.google.com/drive/1de9nkvQpTHr8AZuaSgxCjmR14VqJ5I4F?usp=sharing)
