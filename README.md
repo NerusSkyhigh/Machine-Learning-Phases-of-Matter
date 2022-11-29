@@ -5,11 +5,13 @@ This is done by first comparing the behavior of a _fully connected neural networ
 Then the number of parameters of the FCNN is increased and the accuracy of the model is studied as a function of the lattice size to remove boundary effects.   In the original article, the FCNN is then upgraded to a _convolutional neural network_ to test its accuracy on non-Ising Hamiltonians.  
 Finally, as an appendix, the original data is analyzed with the _t-stochastic neighbors embedding_ algorithm to separate the data into clusters.
 
-> :grey_exclamation: The project is subdivided into notebook written to be run on [google colab](https://colab.research.google.com/). A copy is provided in this repository but they may not run in your local environment. It is possible to access the original notebooks using the link provided.
+> :grey_exclamation: The project is subdivided into notebook written to be run on [google colab](https://colab.research.google.com/). A copy is provided in this repository but they may not run in your local environment. It is possible to access the original notebooks using the link provided. 
 
 > :grey_exclamation: Some images may not display properly if GitHub's dark mode is active. If that's the case please change mode or open the plots one by one.
 
 ## Notebooks
+The following section presents a summary of the results obtained. A more detailed discussion is available inside the notebooks themselves. 
+
 ### 01 Monte Carlo simulation
 [Google colab link](https://colab.research.google.com/drive/1de9nkvQpTHr8AZuaSgxCjmR14VqJ5I4F?usp=sharing)
 
