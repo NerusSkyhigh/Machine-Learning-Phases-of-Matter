@@ -9,61 +9,51 @@
 
 /*
  * Generates the initial configuration.
- *  Should it be random?
  */
 void init(int *lattice, const int L)
 {
     double r;
     r = 1.0*rand() / RAND_MAX;
-    //printf("%f", r);
-    for(int row=0; row<L; row++)
-    {
-        for(int col=0; col<L; col++)
-        {
+    for(int row=0; row<L; row++) {
+        for(int col=0; col<L; col++) {
             #if HOT_INIT == 1
-                // HOT init, all site are random
+                // HOT init, all sites are random
                 r = 1.0*rand() / RAND_MAX; // Returns 0 or 1
                 lattice[row*L + col] = (r>0.5 ? 1 : -1);
             #else
-                // COLD init, same state for all the spins
+                // COLD init, the same state for all the spins
                 lattice[row*L + col] = (r>0.5 ? 1 : -1);
             # endif
         }
-        //printf("\n");
     }
 }
+
 
 /*
  * Copies the lattice into an other lattice
  */
-void copy(int *dest_lattice, const int *src_lattice, const int L)
-{
-    for(int row=0; row<L; row++)
-    {
-        for(int col=0; col<L; col++)
-        {
+void copy(int *dest_lattice, const int *src_lattice, const int L) {
+    for(int row=0; row<L; row++) {
+        for(int col=0; col<L; col++) {
             dest_lattice[row*L + col] = src_lattice[row*L + col];
         }
     }
 }
 
+
 /*
  * Computes the energy in units of J
- *      (J is a constant so I can
- *          multiply for it after)
  */
 int computeEnergy(const int *lattice, int L)
 {
     int E = 0;
     int idx,   // index of the current lattice site,
-        idx_r, // of its nearest neighbourd on the right
+        idx_r, // of its nearest neighbor on the right
         idx_b; // and the one below
-    for(int row=0; row<L; row++)
-    {
-        for(int col=0; col<L; col++)
-        {
-            // Periodic Boundary Conditions
+    for(int row=0; row<L; row++) {
+        for(int col=0; col<L; col++) {
             idx = row*L + col;
+            // Periodic Boundary Conditions
             idx_r = (col == L-1) ? row*L : row*L + col+1;
             idx_b = (row == L-1) ? col   : (row+1)*L + col;
 
@@ -77,20 +67,17 @@ int computeEnergy(const int *lattice, int L)
 
 
 /*
- * Flips the designeted number of flips.
+ * Flips the designated number of flips.
  * Beware that this function does not exclude
  * multiple flips of the same bit
  */
-int propose_configuration(int *lattice, int n_flips, int L, int E)
-{
+int propose_configuration(int *lattice, int n_flips, int L, int E) {
     int row, col,
-        idx_l, idx_a, idx_r, idx_b; //Lefct, above, right, below
+        idx_l, idx_a, idx_r, idx_b; //Left, above, right, below
 
-    for(int n=0; n<n_flips; n++)
-    {
+    for(int n=0; n<n_flips; n++) {
         row = rand()%L;
         col = rand()%L;
-        //printf("row=%d\t col=%d\n", row, col);
 
         lattice[row*L+col] = -1*lattice[row*L+col];
 
@@ -99,7 +86,7 @@ int propose_configuration(int *lattice, int n_flips, int L, int E)
         idx_r = (col == L-1) ?   row*L      :     row*L + col+1;
         idx_b = (row == L-1) ?         col  : (row+1)*L + col;
 
-        E +=  -2*lattice[row*L+col] * (  lattice[idx_l] +
+        E +=  -2*lattice[row*L+col] * ( lattice[idx_l] +
                                         lattice[idx_a] +
                                         lattice[idx_r] +
                                         lattice[idx_b]);
@@ -112,8 +99,7 @@ int propose_configuration(int *lattice, int n_flips, int L, int E)
  * Perform a Monte Carlo step
  * BEWARE that the input vector is changed!
  */
-int montecarlo_step(int *lattice, int L, int E, double T)
-{
+int montecarlo_step(int *lattice, int L, int E, double T) {
     int E_prop; // Energy of the proposed configuration
     int *lattice_prop = (int*) calloc(L*L, sizeof(int*));
 
@@ -123,13 +109,11 @@ int montecarlo_step(int *lattice, int L, int E, double T)
     // Acceptation step
     double w = exp(- (E_prop-E)/T);
     double r = 1.0*rand()/RAND_MAX;
-    //printf("E_prop=%d\t w=%f\t r=%f\t T=%f\n",E_prop, w, r, T);
 
-    if(r <= w) {
-        // Accepted
+    if(r <= w) {        
         copy(lattice, lattice_prop, L);
         free(lattice_prop);
-        return 1;
+        return 1; // Accepted
     } else {
         free(lattice_prop);
         return 0; // Rejected
@@ -137,17 +121,15 @@ int montecarlo_step(int *lattice, int L, int E, double T)
 
 }
 
+
 /*
  * Prints the lattice.
  *      spin=1 --> +
  *      spin=0 --> O
  */
-void printLattice(const int *lattice, const int L)
-{
-    for(int row=0; row<L; row++)
-    {
-        for(int col=0; col<L; col++)
-        {
+void printLattice(const int *lattice, const int L) {
+    for(int row=0; row<L; row++) {
+        for(int col=0; col<L; col++) {
             if( lattice[row*L+col] == 1) {
                 printf("+");
             } else {
@@ -158,13 +140,13 @@ void printLattice(const int *lattice, const int L)
     }
 }
 
+
 /*
- * Save ising lattice to file in CSV format
- * The columns are, in order,
+ * Save Ising lattice to file in CSV format
+ * The columns are, in order:
  *      Lattice size, Temperature, Lattice Energy, lattice sites
  */
-void save(FILE *fptr, int L, double T, int E, int *lattice)
-{
+void save(FILE *fptr, int L, double T, int E, int *lattice) {
     fprintf(fptr,"%d, %lf, %d", L, T, E);
     for(int row=0; row<L; row++) {
         for(int col=0; col<L; col++) {
@@ -180,7 +162,7 @@ void save(FILE *fptr, int L, double T, int E, int *lattice)
  * due to very close callings
  * https://stackoverflow.com/questions/7617587/is-there-an-alternative-to-using-time-to-seed-a-random-number-generation
  */
-unsigned long long rdtsc(){
+unsigned long long rdtsc() {
     unsigned int lo,hi;
     __asm__ __volatile__ ("rdtsc" : "=a" (lo), "=d" (hi));
     return ((unsigned long long)hi << 32) | lo;
@@ -188,11 +170,10 @@ unsigned long long rdtsc(){
 
 
 /*
- * The aim of this program is to generate Ising Configurtions
+ * This program aims to generate Ising configurations
  * on a lattice
  */
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int L, E, NUMBER_OF_CONFIGURATIONS, THERMALISATION_STEPS, INITIAL_THERMALISATION_STEPS;
     double T;
     FILE *fptr;
