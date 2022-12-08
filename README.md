@@ -17,10 +17,11 @@ The first notebook is centered around the Monte Carlo code `MonteCarloSampling.c
 In particular, in the notebook the behavior of the magnetization and the autocorrelation will be analyzed. Both tests will lead to positive results with a correlation length of $\simeq1000$ time steps.
 
 ### Magnetization
-<img src="img/01_magnetization.png" style="background-color:white;"/>
+
+![](img/01_magnetization.png)
 
 ### Autocorrelation
-<img src="img/01_autocorrelation.png" style="background-color:white;"/>
+![](img/01_autocorrelation.png)
 
 </br>
 
