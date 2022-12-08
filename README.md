@@ -102,5 +102,5 @@ As t-SNE uses a non-convex cost function the plot will always look different. So
 - [Differentiable Programming from Scratch](https://thenumb.at/Autodiff/): article on the inner working mechanism of the automatic differentiation algorithm of PyTorch.
 - [Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980): arXiv entry for the Adam optimizer. Only the first two sections were consulted.
 - [Why Momentum really Works](https://distill.pub/2017/momentum/)
-- [t-distributed stochastic neighbour embedding](https://it.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding): Wikipedia entry for t-SNE
+- [t-distributed stochastic neighbour embedding](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding): Wikipedia entry for t-SNE
 - [How to Use t-SNE Effectively](https://distill.pub/2016/misread-tsne/)
